@@ -19,9 +19,9 @@
                         
                     <form action='{{ url("shop") }}' method="POST">
                                                 
-                        Name:{{ $item->name}}        <br>
-                        Stock:{{ $item->qty}}         <br>
-                        Price{{ $item->price}}       <br>
+                        Name : {{ $item->name}}        <br>
+                        Stock : {{ $item->qty}}         <br>
+                        Price : {{ $item->price}}       <br>
                         
                         
                         <input type="hidden" name="_token"  value="{{ csrf_token() }}">
@@ -44,12 +44,27 @@
 
                 <div class="panel-body">
 
-                    @foreach($cart as $item_id=>$qty)
-                        Item {{$item_id}} has qty of {{$qty}}
+                <?php
+                    $total = 0
+                ?>
 
+                    @foreach($cart as $item_id=>$qty)
+                        @foreach($all_items as $item)
+                            @if($item->id == $item_id)
+                                {{$item->name}} has qty of {{$qty}}
+                                SUBTOTAL = {{$qty * $item->price}}
+                                <?php
+                                    $total+= $qty * $item->price
+                                ?>
+                                @break
+                            @endif
+                        @endforeach    
                         <a href="{{url('shop/remove/'.$item_id)}}">Remove from cart</a>
                         <br>
                     @endforeach
+
+                    TOTAL BILL: {{$total}}
+                    <a href="{{url('/checkout')}}">CHECKOUT</a>
 
                 </div>
             </div>

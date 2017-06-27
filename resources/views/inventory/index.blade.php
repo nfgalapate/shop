@@ -45,6 +45,7 @@
                             <td>{{ $item->price}}</td>
                             <td>
                                 <a href='{{ url("inventory/update/". $item->id)  }}'>Update</a>
+                                <a href='{{ url("inventory/delete/". $item->id)  }}'>Delete</a>
                             </td>
                         </tr>
                     @endforeach

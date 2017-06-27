@@ -39,6 +39,13 @@ class InventoryController extends Controller
 		return view('inventory.update',compact('item'));
 	}
 
+	function delete_item($item_id){
+
+		$item = Item::find($item_id);
+		$item->delete();
+		return redirect(url('inventory'));
+	}
+
 	function save_update_item(Request $request){
 		$item_id = $request->input("id");
 		$item = Item::find($item_id);
